@@ -16,3 +16,7 @@
 .logo {
   font-size: 18px;
 }
+
+.active {
+  text-decoration: underline;
+}

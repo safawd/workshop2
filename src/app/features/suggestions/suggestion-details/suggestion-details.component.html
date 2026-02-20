@@ -1,0 +1,14 @@
+<h3>Détails</h3>
+
+<div *ngIf="selected; else nf">
+  <p><b>ID:</b> {{ selected.id }}</p>
+  <p><b>Titre:</b> {{ selected.title }}</p>
+  <p><b>Description:</b> {{ selected.desc }}</p>
+
+  <a routerLink="/suggestions">← back to list</a>
+</div>
+
+<ng-template #nf>
+  <p>Suggestion introuvable</p>
+  <a routerLink="/suggestions">← back to list</a>
+</ng-template>

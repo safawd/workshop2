@@ -1,7 +1,21 @@
 <nav class="navbar">
   <span class="logo">Campus Ideas</span>
+
   <div>
-    <a href="#">Accueil</a>
-    <a href="#">Suggestions</a>
+    <a routerLink="/home"
+       routerLinkActive="active"
+       [routerLinkActiveOptions]="{ exact: true }">
+      Accueil
+    </a>
+
+    <a routerLink="/listSuggestion"
+       routerLinkActive="active">
+      Suggestions
+    </a>
+
+    <a routerLink="/suggestions"
+       routerLinkActive="active">
+      Suggestions (lazy)
+    </a>
   </div>
 </nav>
