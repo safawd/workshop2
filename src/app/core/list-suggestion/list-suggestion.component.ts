@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { Suggestion } from '../../models/suggestion';
 
 @Component({
@@ -10,6 +11,8 @@ export class ListSuggestionComponent {
 
   searchText: string = '';
   favorites: Suggestion[] = [];
+
+  constructor(private router: Router) {}
 
   suggestions: Suggestion[] = [
     {
@@ -55,7 +58,15 @@ export class ListSuggestionComponent {
   }
 
   addToFavorites(s: Suggestion) {
-    this.favorites.push(s);
+    // évite les doublons
+    if (!this.favorites.find(f => f.id === s.id)) {
+      this.favorites.push(s);
+    }
+  }
+
+  // ✅ bouton Details => /suggestions/:id
+  goToDetails(id: number) {
+    this.router.navigate(['/suggestions', id]);
   }
 
   get filteredSuggestions() {

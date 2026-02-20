@@ -19,9 +19,16 @@
   <span class="badge wait" *ngIf="s.status === 'en_attente'">EN ATTENTE</span>
 
   <div *ngIf="s.status !== 'refusee'" class="actions">
-    <button (click)="like(s)">👍 Like {{ s.nbLikes }}</button>
-    <button (click)="addToFavorites(s)">❤️ Ajouter aux favoris</button>
-  </div>
+  <button (click)="like(s)">👍 Like {{ s.nbLikes }}</button>
+
+  <button (click)="addToFavorites(s)">
+    ❤️ Ajouter aux favoris
+  </button>
+
+  <button (click)="goToDetails(s.id)">
+    🔍 Détails
+  </button>
+</div>
 
 </div>
 <hr>
