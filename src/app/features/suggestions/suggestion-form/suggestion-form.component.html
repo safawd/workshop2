@@ -1,0 +1,51 @@
+<h2>Ajouter une suggestion</h2>
+
+<form [formGroup]="form" (ngSubmit)="submit()" class="form-card">
+
+  <!-- TITRE -->
+  <label>Titre :</label>
+  <input type="text" formControlName="title" placeholder="Ex: TeamBuilding" />
+
+  <div class="error" *ngIf="form.get('title')?.touched && form.get('title')?.invalid">
+    <small *ngIf="form.get('title')?.errors?.['required']">Titre obligatoire.</small>
+    <small *ngIf="form.get('title')?.errors?.['minlength']">Minimum 5 caractères.</small>
+    <small *ngIf="form.get('title')?.errors?.['pattern']">
+      Doit commencer par une majuscule et contenir uniquement des lettres.
+    </small>
+  </div>
+
+  <!-- DESCRIPTION -->
+  <label>Description :</label>
+  <textarea rows="4" formControlName="description"
+            placeholder="Minimum 30 caractères..."></textarea>
+
+  <div class="error" *ngIf="form.get('description')?.touched && form.get('description')?.invalid">
+    <small *ngIf="form.get('description')?.errors?.['required']">Description obligatoire.</small>
+    <small *ngIf="form.get('description')?.errors?.['minlength']">Minimum 30 caractères.</small>
+  </div>
+
+  <!-- CATEGORIE -->
+  <label>Catégorie :</label>
+  <select formControlName="category">
+    <option value="">-- Sélectionnez une catégorie --</option>
+    <option *ngFor="let c of categories" [value]="c">{{ c }}</option>
+  </select>
+
+  <div class="error" *ngIf="form.get('category')?.touched && form.get('category')?.invalid">
+    <small>Catégorie obligatoire.</small>
+  </div>
+
+  <!-- DATE -->
+  <label>Date :</label>
+  <input type="text" formControlName="date" readonly />
+
+  <!-- STATUS -->
+  <label>Status :</label>
+  <input type="text" formControlName="status" readonly />
+
+  <!-- BUTTON -->
+  <button type="submit" [disabled]="form.invalid">
+    Soumettre
+  </button>
+
+</form>

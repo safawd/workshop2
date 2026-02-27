@@ -1,25 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { SuggestionsService } from '../suggestions.service';
+import { Suggestion } from '../../../models/suggestion';
 
 @Component({
   selector: 'app-suggestion-details',
   templateUrl: './suggestion-details.component.html',
+  styleUrls: ['./suggestion-details.component.css']
 })
 export class SuggestionDetailsComponent implements OnInit {
-  id!: number;
 
-  suggestions = [
-    { id: 1, title: 'Dark mode', desc: 'Add theme toggle.' },
-    { id: 2, title: 'Dashboard charts', desc: 'Add charts.' },
-    { id: 3, title: 'Export PDF', desc: 'Generate PDF.' },
-  ];
+  selected?: Suggestion;
 
-  selected: any;
-
-  constructor(private route: ActivatedRoute) {}
+  constructor(
+    private route: ActivatedRoute,
+    private suggestionsService: SuggestionsService
+  ) {}
 
   ngOnInit(): void {
-    this.id = Number(this.route.snapshot.paramMap.get('id'));
-    this.selected = this.suggestions.find(s => s.id === this.id);
+    this.route.paramMap.subscribe(params => {
+      const id = Number(params.get('id'));
+      this.selected = this.suggestionsService.getById(id);
+    });
   }
 }

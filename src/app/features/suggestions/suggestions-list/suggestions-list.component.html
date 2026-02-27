@@ -1,8 +1,14 @@
-<h3>Liste des suggestions (lazy)</h3>
+<div class="top">
+  <h3>Liste des suggestions (lazy)</h3>
+
+  <button class="add-btn" routerLink="/suggestions/add">
+    ➕ Ajouter suggestion
+  </button>
+</div>
 
 <ul>
   <li *ngFor="let s of suggestions">
-    {{ s.title }}
-    <button (click)="details(s.id)">Details</button>
+    <span class="title">{{ s.title }}</span>
+    <button class="details-btn" (click)="details(s.id)">Details</button>
   </li>
 </ul>
