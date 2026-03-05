@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { provideHttpClient } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -22,10 +23,13 @@ import { ListSuggestionComponent } from './core/list-suggestion/list-suggestion.
   ],
   imports: [
     BrowserModule,
+    AppRoutingModule,
     FormsModule,
-    AppRoutingModule
+    ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [
+    provideHttpClient(), // ✅ comme le cours
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

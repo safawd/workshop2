@@ -1,14 +1,23 @@
-<div class="top">
-  <h3>Liste des suggestions (lazy)</h3>
+<div class="page">
+  <div class="head">
+    <h2>Liste des suggestions</h2>
+    <button class="btn add" (click)="add()">+ Ajouter suggestion</button>
+  </div>
 
-  <button class="add-btn" routerLink="/suggestions/add">
-    ➕ Ajouter suggestion
-  </button>
+  <p *ngIf="loading">Chargement...</p>
+  <p class="error" *ngIf="errorMsg">{{ errorMsg }}</p>
+
+  <div class="card" *ngFor="let s of suggestions">
+    <div class="title">{{ s.title }}</div>
+    <div class="meta">{{ s.category }} | {{ s.date | date:'dd/MM/yyyy' }}</div>
+
+   <div class="actions">
+  <button class="btn" (click)="like(s)">👍 Like {{ s.nbLikes }}</button>
+
+  <button class="btn info" (click)="details(s.id)">Détails</button>
+
+  <button class="btn warn" (click)="update(s.id)">Update</button>
+
+  <button class="btn danger" (click)="delete(s.id)">Supprimer</button>
 </div>
-
-<ul>
-  <li *ngFor="let s of suggestions">
-    <span class="title">{{ s.title }}</span>
-    <button class="details-btn" (click)="details(s.id)">Details</button>
-  </li>
-</ul>
+</div>

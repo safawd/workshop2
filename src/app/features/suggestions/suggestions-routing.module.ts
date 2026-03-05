@@ -1,17 +1,20 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+
 import { SuggestionsListComponent } from './suggestions-list/suggestions-list.component';
 import { SuggestionDetailsComponent } from './suggestion-details/suggestion-details.component';
 import { SuggestionFormComponent } from './suggestion-form/suggestion-form.component';
 
+
 const routes: Routes = [
   { path: '', component: SuggestionsListComponent },
-  { path: 'add', component: SuggestionFormComponent }, // IMPORTANT avant :id
-  { path: ':id', component: SuggestionDetailsComponent }
+  { path: 'add', component: SuggestionFormComponent },
+  { path: 'edit/:id', component: SuggestionFormComponent }, // ✅ update
+  { path: ':id', component: SuggestionDetailsComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class SuggestionsRoutingModule {}

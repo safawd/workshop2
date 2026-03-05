@@ -1,14 +1,24 @@
 <h3>Détails</h3>
 
-<div *ngIf="selected; else nf">
-  <p><b>ID:</b> {{ selected.id }}</p>
-  <p><b>Titre:</b> {{ selected.title }}</p>
-  <p><b>Description:</b> {{ selected.description }}</p>
+<p *ngIf="loading">Chargement...</p>
+<p class="error" *ngIf="errorMsg">{{ errorMsg }}</p>
 
-  <a routerLink="/suggestions">← back to list</a>
+<div *ngIf="suggestion; else nf">
+  <p><b>ID:</b> {{ suggestion.id }}</p>
+  <p><b>Titre:</b> {{ suggestion.title }}</p>
+  <p><b>Description:</b> {{ suggestion.description }}</p>
+  <p><b>Catégorie:</b> {{ suggestion.category }}</p>
+  <p><b>Date:</b> {{ suggestion.date | date:'dd/MM/yyyy' }}</p>
+  <p><b>Status:</b> {{ suggestion.status }}</p>
+  <p><b>Likes:</b> {{ suggestion.nbLikes }}</p>
+
+  <div style="margin-top: 12px; display:flex; gap:10px;">
+    <button (click)="back()">← Retour</button>
+    <button (click)="delete()">🗑 Supprimer</button>
+  </div>
 </div>
 
 <ng-template #nf>
   <p>Suggestion introuvable</p>
-  <a routerLink="/suggestions">← back to list</a>
+  <button (click)="back()">← Retour</button>
 </ng-template>

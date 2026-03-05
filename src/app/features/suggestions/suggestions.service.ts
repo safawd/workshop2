@@ -1,56 +1,42 @@
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { Suggestion } from '../../models/suggestion';
 
 @Injectable({
   providedIn: 'root'
 })
-export class SuggestionsService {
+export class SuggestionService {
 
-  private suggestions: Suggestion[] = [
-    {
-      id: 1,
-      title: 'Darkmode',
-      description: 'Ajouter un mode sombre pour améliorer le confort visuel des utilisateurs.',
-      category: 'Technologie et services numériques',
-      date: new Date(),
-      status: 'en_attente',
-      nbLikes: 0
-    },
-    {
-      id: 2,
-      title: 'Dashboard',
-      description: 'Créer un dashboard avec statistiques afin de visualiser les informations rapidement.',
-      category: 'Technologie et services numériques',
-      date: new Date(),
-      status: 'en_attente',
-      nbLikes: 0
-    },
-    {
-      id: 3,
-      title: 'Exportpdf',
-      description: 'Permettre l’exportation en PDF pour faciliter le partage et l’archivage des données.',
-      category: 'Communication interne',
-      date: new Date(),
-      status: 'en_attente',
-      nbLikes: 0
-    }
-  ];
+  private suggestionUrl = 'http://localhost:3000/suggestions';
+  private httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
 
-  getAll(): Suggestion[] {
-    return this.suggestions;
+  constructor(private http: HttpClient) {}
+
+  getSuggestionsList(): Observable<Suggestion[]> {
+    return this.http.get<Suggestion[]>(this.suggestionUrl);
   }
 
-  getById(id: number): Suggestion | undefined {
-    return this.suggestions.find(s => s.id === id);
+  getSuggestionById(id: number): Observable<Suggestion> {
+    return this.http.get<Suggestion>(`${this.suggestionUrl}/${id}`);
   }
 
-  add(s: Suggestion): void {
-    this.suggestions.push(s);
+  addSuggestion(s: Omit<Suggestion, 'id'>): Observable<Suggestion> {
+    return this.http.post<Suggestion>(this.suggestionUrl, s, this.httpOptions);
   }
 
-  getNextId(): number {
-    return this.suggestions.length
-      ? Math.max(...this.suggestions.map(s => s.id)) + 1
-      : 1;
+  deleteSuggestion(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.suggestionUrl}/${id}`);
+  }
+
+  updateSuggestion(id: number, s: Partial<Suggestion>): Observable<Suggestion> {
+    return this.http.put<Suggestion>(`${this.suggestionUrl}/${id}`, s, this.httpOptions);
+  }
+
+  likeSuggestion(s: Suggestion): Observable<Suggestion> {
+    const updated = { ...s, nbLikes: (s.nbLikes ?? 0) + 1 };
+    return this.updateSuggestion(s.id, updated);
   }
 }
